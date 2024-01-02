@@ -37,9 +37,6 @@
     padding: 50px 50px;
 }
 
-a:hover {
-    color: rgb(234, 237, 237);
-  }
 
 .row.bg-info {
     text-align: center;
@@ -53,5 +50,9 @@ a:hover {
 }
 
 .text-userpage{
+    text-decoration: none;
+}
+
+a#logout {
     text-decoration: none;
 }

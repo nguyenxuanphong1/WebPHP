@@ -50,11 +50,40 @@ $result = $conn->query($sql);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="snow.css">
     <link rel="stylesheet" href="http://pajasevi.github.io/CSSnowflakes/">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <title>Quản Lý Thư Viện - Thông Tin Sách</title>
 </head>
 <body>
+<div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+    </div>
+
     <div class="container-fluid">
        <div class="row">
             <header class="header-banner text-center h-20vh ">
@@ -72,72 +101,64 @@ $result = $conn->query($sql);
     </section>
 
     <section class="container-fluid">
-        <div class="row pt-2" style="height: 800px">
+        <div class="row" style="height: 800px">
             <div class="col-sm-2 text-black img-user">
                 <div class="img-userpage"><img src="../img/userpage.png " alt=""></div>
                 <h5><span>user</span></h5>
                 <h5> <i class="bi bi-person-hearts"></i> <span><?php echo $_SESSION['user_name']?>-<?php echo $_SESSION['id']?></span></h5>
-
-                <a href="../loginform.php" class="btn">Thoát <i class="bi bi-door-open"></i></a>
+            
+                <a href=""  id="logout">Đăng Xuất<i class="bi bi-door-open"></i></a>
             </div>
-            <div class="col-sm-10 bg-success text-white">
+            <div class="col-sm-10  text-dark">
                 <div class="row">
                     <h3 class="text-center ">Danh sách</h3>
                 </div>
             
-            <div class="row pt-2"  style="height: 300px">
-                <div class="col-sm-12 table-responsive textcontent">  
-                <?php
-                if (isset($success_message)) {
-                echo "<p class='success'>$success_message</p>";
-                }
+                <div class="row pt-2" style="height: 300px">
+                        <div class="col-sm-12 table-responsive textcontent">
+                            <?php
+                            if ($result->num_rows > 0) {
+                                echo "<table id='table' class='table border-collapse border-secondary table-striped table-secondary'>
+                                <thead class='position-sticky top-0 z-1 table-dark'>
+                                    <tr>
+                                        <th class='text-nowrap' scope='col'>Tiêu Đề</th>
+                                        <th class='text-nowrap' scope='col'>Tác Giả</th>
+                                        <th class='text-nowrap' scope='col'>Mã Số Sách</th>
+                                        <th class='text-nowrap' scope='col'>Năm Xuất Bản</th>
+                                        <th class='text-nowrap' scope='col'>Số Lượng Còn</th>
+                                        <th class='text-nowrap' scope='col'>Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody class='overflow-auto'>";
 
-                if (isset($error_message)) {
-                echo "<p class='error'>$error_message</p>";
-                }
-                ?>
-                <?php
-                    if ($result->num_rows > 0) {
-                        echo "<table id='table' class='table border-collapse border-secondary table-striped  table-secondary'>
-                        <thead class='position-sticky top-0 z-1 table-dark'>
-                            <tr>
-                                <th class='text-nowrap' scope='col'>Tiêu Đề</th>
-                                <th class='text-nowrap' scope='col'>Tác Giả</th>
-                                <th class='text-nowrap' scope='col'>Mã Số Sách</th>
-                                <th class='text-nowrap' scope='col'>Năm Xuất Bản</th>
-                                <th class='text-nowrap' scope='col'>Số Lượng Còn</th>
-                                <th class='text-nowrap' scope='col'>Thao Tác</th>
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr class='text-dark'>
+                                        <td>{$row['TieuDe']}</td>
+                                        <td>{$row['TacGia']}</td>
+                                        <td>{$row['MaSach']}</td>
+                                        <td>{$row['NamXuatBan']}</td>
+                                        <td>{$row['SoLuongCon']}</td>
+                                        <td>
+                                            <form method='post'>
+                                                <input type='hidden' name='id' value='{$row['MaSach']}'>
+                                                <input name='muon' class='btn btn-primary' type='submit' value='Mượn'>
+                                            </form>
+                                        </td>
+                                    </tr>";
+                                }
 
-                            </tr>
-                        </thead>
-                <tbody class='overflow-auto'>";
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr class='text-dark'>
-                            <td>{$row['TieuDe']}</td>
-                            <td>{$row['TacGia']}</td>
-                            <td>{$row['MaSach']}</td>
-                            <td>{$row['NamXuatBan']}</td>
-                            <td>{$row['SoLuongCon']}</td>
-                            <td>
-                            <form method = 'post'>
-                                <input type='hidden' name ='id' value ='{$row['MaSach']}'>
-                                <input name='muon' class='btn btn-primary ' type='submit' value='Mượn'>
-                            </form>
-                            </td>
-                        </tr>;
-                        }
-                        ";
-                        
-                    }echo "</tbody>
-                </table>";
-                }
-            ?>
-        
+                                echo "</tbody></table>";
+                            } else {
+                                echo "Không có sách.";
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
     </div>
-</div>       
-</section>
-    <script src="../js/script.js"></script>
+        <script src="../js/script.js"></script>
 </body>
+
 </html>

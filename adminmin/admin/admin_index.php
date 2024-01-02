@@ -40,7 +40,7 @@
             <!-- <li><a href="admin_readers.php">Quản Lý Độc Giả</a></li> -->
             <li><a href="admin_borrowings.php">Quản Lý Mượn/Trả Sách</a></li>
             <li><a href="admin_users.php">Quản Lý Độc Giả</a></li>
-            <li><a href="admin_index.php?logout=true" id="logout">Đăng Xuất</a></li>
+            <li><a href=""  id="logout">Đăng Xuất</a></li>
         </ul>
     </nav>
     </div>

@@ -30,9 +30,9 @@ $(document).ready(function () {
       cancelButtonText: 'Hủy'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "../loginform.php?logout=true";
+        window.location.href = "../logout.php";
         // window.location.href = "loginform.php?logout=true";
-        // Hoặc window.location.href = "user.php?logout=true"; nếu cần
+        // window.location.href = "../loginform.php?logout=true";
       }
     });
   });

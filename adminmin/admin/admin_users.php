@@ -116,7 +116,7 @@ $result = $conn->query($sql);
             <!-- <li><a href="admin_readers.php">Quản Lý Độc Giả</a></li> -->
             <li><a href="admin_borrowings.php">Quản Lý Mượn/Trả Sách</a></li>
             <li><a href="admin_users.php">Quản Lý Độc Giả</a></li>
-            <li><a href="admin_index.php?logout=true" id="logout">Đăng Xuất</a></li>
+            <li><a href="" id="logout">Đăng Xuất</a></li>
             <!-- Thêm liên kết hoặc nút để điều hướng đến các trang khác -->
         </ul>
     </nav>

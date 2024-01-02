@@ -18,9 +18,40 @@ if(!isset($_SESSION['user_name']) ){
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <title>Quản Trị Viên - Quản Lý Sách</title>
     <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="snow.css">
 </head>
 <body>
+<div class="snowflakes" aria-hidden="true">
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+        <div class="snowflake">❅</div>
+        <div class="snowflake">❆</div>
+    </div>
+
     <div class="container-fluid">
        <div class="row">
             <header class="header-banner text-center h-20vh ">
@@ -39,15 +70,15 @@ if(!isset($_SESSION['user_name']) ){
     </section>
 
     <section class="container-fluid">
-        <div class="row pt-2" style="height: 1100px">
+        <div class="row " style="height: 1100px">
             <div class="col-sm-2 text-black img-user">
                 <div class="img-userpage"><img src="../img/userpage.png " alt=""></div>
                 <h5><span>user</span></h5>
                 <h5> <i class="bi bi-person-hearts"></i> <span><?php echo $_SESSION['user_name']?>-<?php echo $_SESSION['id']?></span></h5>
 
-                <a href="../loginform.php" class="btn">Thoát <i class="bi bi-door-open"></i></a>
+                <a href=""  id="logout">Đăng Xuất<i class="bi bi-door-open"></i></a>
             </div>
-            <div class="col-sm-10 bg-success text-white"></div>
+            <div class="col-sm-10 text-dark"></div>
         </div>
     </section>
 
@@ -56,6 +87,7 @@ if(!isset($_SESSION['user_name']) ){
             Hệ thống quản lý thư viện giúp bạn theo dõi thông tin sách, độc giả, và quản lý quá trình mượn/trả sách.
         </p>
     </section>
+    <script src="../js/script.js"></script>
 </body>
 </html>
 
