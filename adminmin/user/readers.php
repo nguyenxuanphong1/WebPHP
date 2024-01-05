@@ -72,7 +72,7 @@ $result = $conn->query($sql);
        </div>
     </div>
     <section class="container-fluid ">
-        <div class=" row bg-info ">
+        <div class="row bg-darkBlue toolbar">
             <div class="col-sm-3 "><a href="books.php" class="text-nav">Sách</a></div>
             <div class="col-sm-3 "><a href="readers.php" class="text-nav">Độc Giả</a></div>
             <div class="col-sm-3 "><a href="historybook.php" class="text-nav">Lịch Sử Mượn Sách</a></div>
@@ -149,5 +149,6 @@ $result = $conn->query($sql);
         </div>
     </div>
 </section>
+<script src="../js/script.js"></script>
 </body>
 </html>

@@ -41,11 +41,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["returnBook"])) {
     }
 }
 
+// Xử lý xóa sách
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["deleteBook"])) {
+    $bookId = $_POST["bookId"];
+
+    $deleteBookSql = "DELETE FROM muontrasach WHERE maMuonTra=$bookId";
+    if ($conn->query($deleteBookSql) === TRUE) {
+        // echo "<p class='success'>Sách đã được xóa thành công.</p>";
+    } else {
+        echo "<p class='error'>Lỗi: " . $conn->error . "</p>";
+    }
+}
+
 // Lấy danh sách mượn/trả sách từ cơ sở dữ liệu
 $sql = "SELECT MuonTraSach.MaMuonTra, MuonTraSach.MaSach, 
-MuonTraSach.NgayMuon, MuonTraSach.NgayTra, docgia.Ten
-FROM MuonTraSach join docgia on MuonTraSach.MaDocGia = docgia.MaDocGia ";
-$result = $conn->query($sql);
+MuonTraSach.NgayMuon, MuonTraSach.NgayTra, user_form.Name
+FROM MuonTraSach join user_form on MuonTraSach.MaDocGia = user_form.Id ";
+$result_borrowers = $conn->query($sql);
+
+
+$searchTerm = ''; // Khởi tạo biến lưu trữ giá trị tìm kiếm
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
+    // Lấy dữ liệu từ form tìm kiếm
+    $searchTerm = $_POST['search'];
+
+    // Thực hiện truy vấn dựa trên tên người mượn
+    $sql_search = "SELECT MuonTraSach.MaMuonTra, MuonTraSach.MaSach, 
+    MuonTraSach.NgayMuon, MuonTraSach.NgayTra, user_form.Name
+    FROM MuonTraSach join user_form on MuonTraSach.MaDocGia = user_form.Id WHERE NgayMuon LIKE '%$searchTerm%'";
+
+    $result_borrowers = $conn->query($sql_search);
+}
 ?>
 
 <!DOCTYPE html>
@@ -80,8 +107,7 @@ $result = $conn->query($sql);
         <div class="snowflake">❆</div>
     </div>
 
-    <div class="position-sticky top-0">
-    <div class="position-sticky top-0">
+    <div class="">
     <header class="header-banner text-center h-20vh ">
         <img width="20%" src="../img/banner_left.png">
     </header>
@@ -92,6 +118,7 @@ $result = $conn->query($sql);
             <!-- <li><a href="admin_readers.php">Quản Lý Độc Giả</a></li> -->
             <li><a href="admin_borrowings.php">Quản Lý Mượn/Trả Sách</a></li>
             <li><a href="admin_users.php">Quản Lý Độc Giả</a></li>
+            <li><a href="admin_report.php">Báo Cáo</a></li>
             <li><a href="" id="logout" >Đăng Xuất</a></li>
             <!-- Thêm các liên kết khác tùy thuộc vào nhu cầu -->
         </ul>
@@ -103,6 +130,13 @@ $result = $conn->query($sql);
         <div class="row pt-2 ">
             <h2 class="text-center mt-2">Quản Lý Mượn/Trả Sách</h2>
         </div>
+        <!-- Form tìm kiếm -->
+        <form method="POST" action="">
+            <div class="input-group mb-3" style="width: 50%; margin: auto;">
+                <input type="text" class="form-control" placeholder="Nhập ngày mượn cần tìm" name="search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search-heart"></i></button>
+            </div>
+        </form>
 
         <div class="row pt-2"  style="height: 300px">
             <div class="col-sm-12 table-responsive textcontent">  
@@ -120,7 +154,7 @@ $result = $conn->query($sql);
         
         
 
-            if ($result->num_rows > 0) {
+            if ($result_borrowers->num_rows > 0) {
                 echo "<table class='table border-collapse border-secondary table-striped  table-secondary'>
                     <thead class='position-sticky top-0 z-1 table-dark'>
                         <tr>
@@ -130,13 +164,14 @@ $result = $conn->query($sql);
                             <th class='text-nowrap' scope='col'>Ngày Mượn</th>
                             <th class='text-nowrap' scope='col'>Ngày Trả</th>
                             <th class='text-nowrap' scope='col'>Thao Tác</th>
+                            <th class='text-nowrap' scope='col'>Chức Năng</th>
                         </tr>
                     </thead>
                 <tbody class='overflow-auto'>";
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $result_borrowers->fetch_assoc()) {
                         echo "<tr>
                             <td>{$row['MaMuonTra']}</td>
-                            <td>{$row['Ten']}</td>
+                            <td>{$row['Name']}</td>
                             <td>{$row['MaSach']}</td>
                             <td>{$row['NgayMuon']}</td>
                             <td>{$row['NgayTra']}</td>
@@ -146,6 +181,12 @@ $result = $conn->query($sql);
                                     <label for='returnDate'>Ngày Trả:</label>
                                     <input type='date' name='returnDate' required>
                                     <button type='submit' name='returnBook' class='buttonborrowings'>Cập Nhật Trả Sách</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='post' action=''>
+                                    <input type='hidden' name='bookId' value='{$row['MaMuonTra']}'>
+                                    <button type='submit' name='deleteBook'>Xóa</button>
                                 </form>
                             </td>
                         </tr>";
@@ -177,19 +218,19 @@ $result = $conn->query($sql);
             <div class="col-4 m-auto"><hr size="6px" align="center" color="#000000"/></div>
         </div>
 
-        <div class="row bg-info">
+        <div class="row bg-darkBlue text-white">
             <div class="col-sm-12 ">
                 <form method="post" class="text-center p-3" action="">
                     <label for="readerId">Chọn Độc Giả:</label>
                     <select name="readerId" required>
                     <!-- Lấy danh sách độc giả từ cơ sở dữ liệu và tạo các tùy chọn -->
                     <?php
-                    $readerQuery = "SELECT * FROM DocGia";
+                    $readerQuery = "SELECT * FROM user_form";
                     $readerResult = $conn->query($readerQuery);
 
                     if ($readerResult->num_rows > 0) {
                     while ($readerRow = $readerResult->fetch_assoc()) {
-                        echo "<option value='{$readerRow['MaDocGia']}'> {$readerRow['Ten']}</option>";
+                        echo "<option value='{$readerRow['id']}'> {$readerRow['name']}</option>";
                         }
                     }
                     ?>

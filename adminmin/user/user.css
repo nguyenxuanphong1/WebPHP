@@ -1,3 +1,7 @@
+.bg-darkBlue{
+    background-color: #0d0774;
+  }
+
 *{
     font-family: 'Poppins', sans-serif;
     margin: 0; padding: 0;
@@ -18,10 +22,10 @@
     padding: 5px;
     text-decoration: none;
     font-size: 23px;
-    color: rgb(22, 19, 103);
+    color: white;
 }
 
-.row.bg-info {
+.row.toolbar {
     margin-top: 15px;
     font-size: 20px;
     box-shadow: 2px 7px 11px 3px #888888;
@@ -38,7 +42,7 @@
 }
 
 
-.row.bg-info {
+.row.toolbar {
     text-align: center;
     padding: 10px;
 }
@@ -56,3 +60,8 @@
 a#logout {
     text-decoration: none;
 }
+
+.row .text-nav:hover {
+    color: #aaaaae;
+}
+

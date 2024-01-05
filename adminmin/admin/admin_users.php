@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["addUser"])) {
     $newUsername = $_POST["input2"];
     $newEmail = $_POST["input3"];
     $newsdt = $_POST["input4"];
-    $newPassword = $_POST["input5"];
+    $newPassword = md5($_POST["input5"]);
     $newUserType = $_POST["input6"];
 
     // Thêm người dùng mới vào cơ sở dữ liệu
@@ -71,7 +71,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
 
 // Lấy danh sách người dùng từ cơ sở dữ liệu
 $sql = "SELECT * FROM user_form";
-$result = $conn->query($sql);
+$result_borrowers = $conn->query($sql);
+
+$searchTerm = ''; // Khởi tạo biến lưu trữ giá trị tìm kiếm
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
+    // Lấy dữ liệu từ form tìm kiếm
+    $searchTerm = $_POST['search'];
+
+    // Thực hiện truy vấn dựa trên tên người mượn
+    $sql_search = "SELECT * FROM user_form WHERE name LIKE '%$searchTerm%'";
+
+    $result_borrowers = $conn->query($sql_search);
+}
 ?>
 
 <!DOCTYPE html>
@@ -105,7 +117,7 @@ $result = $conn->query($sql);
         <div class="snowflake">❆</div>
     </div>
 
-    <div class="position-sticky top-0">
+    <div class="">
         <header class="header-banner text-center h-20vh ">
             <img width="20%" src="../img/banner_left.png">
         </header>
@@ -116,6 +128,7 @@ $result = $conn->query($sql);
             <!-- <li><a href="admin_readers.php">Quản Lý Độc Giả</a></li> -->
             <li><a href="admin_borrowings.php">Quản Lý Mượn/Trả Sách</a></li>
             <li><a href="admin_users.php">Quản Lý Độc Giả</a></li>
+            <li><a href="admin_report.php">Báo Cáo</a></li>
             <li><a href="" id="logout">Đăng Xuất</a></li>
             <!-- Thêm liên kết hoặc nút để điều hướng đến các trang khác -->
         </ul>
@@ -125,11 +138,17 @@ $result = $conn->query($sql);
         <div class="row pt-2 ">
             <h2 class="text-center mt-2">Quản Lý Người Dùng</h2>
         </div>
+        <form method="POST" action="">
+            <div class="input-group mb-3" style="width: 50%; margin: auto;">
+                <input type="text" class="form-control" placeholder="Nhập tên cần tìm" name="search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search-heart"></i></button>
+            </div>
+        </form>
         <div class="row pt-2"  style="height: 300px">
             <div class="col-sm-12 table-responsive textcontent">  
 
         <?php
-        if ($result->num_rows > 0) {
+        if ($result_borrowers->num_rows > 0) {
             echo "<table id = 'table' class='table border-collapse border-secondary table-striped  table-secondary'>
                 <thead class='position-sticky top-0 z-1 table-dark'>
                     <tr>
@@ -144,7 +163,7 @@ $result = $conn->query($sql);
                 </thead>
 
             <tbody class='overflow-auto'>";
-            while ($row = $result->fetch_assoc()) {
+            while ($row = $result_borrowers->fetch_assoc()) {
                 echo "<tr>
                         <td>{$row['id']}</td>
                         <td>{$row['name']}</td>
@@ -187,7 +206,7 @@ $result = $conn->query($sql);
         <div class="col-4 m-auto"><hr size="6px" align="center" color="#000000"/></div>   
     </div>
 
-    <div class="row bg-info" >
+    <div class="row bg-darkBlue text-white" >
         <div class="col-sm-12 ">
         <form method="post" class="text-center p-3" action="">
             <label for="newUsername">Id:</label>

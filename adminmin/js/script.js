@@ -17,6 +17,8 @@ $(document).ready(function () {
 
 
 
+
+
   // nút đăng xuất
   $('#logout').on('click', function (event) {
     event.preventDefault();
@@ -36,6 +38,22 @@ $(document).ready(function () {
       }
     });
   });
+
+  function searchBorrower() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('#table tbody tr');
+
+    rows.forEach(row => {
+        const name = row.querySelector('td:first-child').textContent.toLowerCase();
+        if (name.includes(input)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+  
+
 
 });
 

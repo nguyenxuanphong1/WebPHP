@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 }
 
 
+
 // ... (các phần code khác của bạn)
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["muon"])) {
@@ -22,15 +23,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["muon"])) {
     $ngayMuon = date("Y-m-d H:i:s");
     $maSach = $_POST["id"];
 
-    $sql = "INSERT INTO muontrasach(MaDocGia, MaSach, NgayMuon, NgayTra)
-    VALUES ('$maDocGia', '$maSach', '$ngayMuon', NULL)";
-
-    if ($conn->query($sql) === TRUE) {
-        // echo "Mượn sách thành công";
+    // Thực hiện thêm dữ liệu vào bảng muontrasach
+    $sql_insert = "INSERT INTO muontrasach(MaDocGia, MaSach, NgayMuon, NgayTra) VALUES ('$maDocGia', '$maSach', '$ngayMuon', NULL)";
+    
+    if ($conn->query($sql_insert) === TRUE) {
+        // Nếu thêm thành công, cập nhật số lượng sách còn lại trong bảng Sach
+        $sql_update = "UPDATE Sach SET SoLuongCon = SoLuongCon - 1 WHERE MaSach = '$maSach'";
+        if ($conn->query($sql_update) === TRUE) {
+            // Số lượng sách đã được cập nhật thành công
+            // echo "Mượn sách thành công";
+        } else {
+            echo "Lỗi khi cập nhật số lượng sách: " . $conn->error;
+        }
     } else {
         echo "Lỗi khi mượn sách: " . $conn->error;
     }
 }
+
+// ... (phần code HTML và hiển thị danh sách sách)
+
 
 
 
@@ -92,11 +103,11 @@ $result = $conn->query($sql);
        </div>
     </div>
     <section class="container-fluid ">
-        <div class=" row bg-info ">
-            <div class="col-sm-3 "><a href="books.php" class="text-nav">Sách</a></div>
-            <div class="col-sm-3 "><a href="readers.php" class="text-nav">Độc Giả</a></div>
-            <div class="col-sm-3 "><a href="historybook.php" class="text-nav">Lịch Sử Mượn Sách</a></div>
-            <div class="col-sm-3 "><a href="introducepage.php" class="text-nav" id="gt">Giới thiệu</a></div>
+        <div class="row bg-darkBlue toolbar ">
+            <div class="col-sm-3 "><a href="books.php" class="text-nav ">Sách</a></div>
+            <div class="col-sm-3 "><a href="readers.php" class="text-nav ">Độc Giả</a></div>
+            <div class="col-sm-3 "><a href="historybook.php" class="text-nav ">Lịch Sử Mượn Sách</a></div>
+            <div class="col-sm-3 "><a href="introducepage.php" class="text-nav " id="gt">Giới thiệu</a></div>
         </div>
     </section>
 

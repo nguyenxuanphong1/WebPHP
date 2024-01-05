@@ -1,4 +1,5 @@
 <?php
+session_start();
 // admin_books.php
 
 $servername = "localhost";
@@ -57,8 +58,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     }
 }
 
+
+
 $sql = "SELECT * FROM Sach";
-$result = $conn->query($sql);
+$result_borrowers = $conn->query($sql);
+
+$searchTerm = ''; // Khởi tạo biến lưu trữ giá trị tìm kiếm
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
+    // Lấy dữ liệu từ form tìm kiếm
+    $searchTerm = $_POST['search'];
+
+    // Thực hiện truy vấn dựa trên tên người mượn
+    $sql_search = "SELECT * FROM sach WHERE TieuDe LIKE '%$searchTerm%'";
+
+    $result_borrowers = $conn->query($sql_search);
+}
+
+
 
 ?>
 
@@ -105,31 +122,37 @@ $result = $conn->query($sql);
         <div class="snowflake">❆</div>
     </div>
     
-    <div class="position-sticky top-0">
-    <header class="header-banner text-center h-20vh ">
-        <img width="20%" src="../img/banner_left.png">
-    </header>
-    <nav>
-        <ul>
-            <li><a href="admin_books.php">Quản Lý Sách</a></li>
-            <!-- <li><a href="admin_readers.php">Quản Lý Độc Giả</a></li> -->
-            <li><a href="admin_borrowings.php">Quản Lý Mượn/Trả Sách</a></li>
-            <li><a href="admin_users.php">Quản Lý Độc Giả</a></li>
-            <li><a href="" id="logout">Đăng Xuất</a></li>
-            <!-- Thêm liên kết hoặc nút để điều hướng đến các trang khác -->
-        </ul>
-    </nav>
+    <div class="">
+        <header class="header-banner text-center h-20vh ">
+            <img width="20%" src="../img/banner_left.png">
+        </header>
+        <nav>
+            <ul>
+                <li><a href="admin_books.php">Quản Lý Sách</a></li>
+                <li><a href="admin_borrowings.php">Quản Lý Mượn/Trả Sách</a></li>
+                <li><a href="admin_users.php">Quản Lý Độc Giả</a></li>
+                <li><a href="admin_report.php">Báo Cáo</a></li>
+                <li><a href="" id="logout">Đăng Xuất</a></li>
+            </ul>
+        </nav>
     </div>
     <section class="container-fluid" >
         <div class="row pt-2 ">
-                <h2 class="text-center mt-2 ">Quản Lý Sách</h2>
+            <h2 class="text-center mt-2 ">Quản Lý Sách</h2>
+             <!-- Form tìm kiếm -->
+        <form method="POST" action="">
+            <div class="input-group mb-3" style="width: 50%; margin: auto;">
+                <input type="text" class="form-control" placeholder="Nhập tên sách cần tìm" name="search">
+                <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search-heart"></i></button>
+            </div>
+        </form>
         </div>
 
 
         <div class="row pt-2"  style="height: 300px">
             <div class="col-sm-12 table-responsive textcontent">  
                 <?php
-                if ($result->num_rows > 0) {
+                if ($result_borrowers->num_rows > 0) {
                     echo "<table id='table' class='table border-collapse border-secondary table-striped  table-secondary'>
                     <thead class='position-sticky top-0 z-1 table-dark'>
                         <tr>
@@ -142,7 +165,7 @@ $result = $conn->query($sql);
                         </tr>
                     </thead>
                 <tbody class='overflow-auto'>";
-                 while ($row = $result->fetch_assoc()) {
+                 while ($row = $result_borrowers->fetch_assoc()) {
                     echo "<tr>
                             <td>{$row['TieuDe']}</td>
                             <td>{$row['TacGia']}</td>
@@ -173,7 +196,7 @@ $result = $conn->query($sql);
         <div class="col-5 m-auto"><hr size="6px" align="center" color="#000000"/></div>   
     </div>
 
-    <div class="row bg-info  " >
+    <div class="row bg-darkBlue text-white  " >
         <div class="col-lg-12 text-center ">
            
             <form method="post" class="p-3" action="">

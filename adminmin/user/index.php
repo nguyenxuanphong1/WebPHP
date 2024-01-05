@@ -61,7 +61,7 @@ if(!isset($_SESSION['user_name']) ){
     </div>
 
     <section class="container-fluid ">
-        <div class=" row bg-info ">
+        <div class="row bg-darkBlue toolbar">
             <div class="col-sm-3 "><a href="books.php" class="text-nav">Sách</a></div>
             <div class="col-sm-3 "><a href="readers.php" class="text-nav">Độc Giả</a></div>
             <div class="col-sm-3 "><a href="historybook.php" class="text-nav">Lịch Sử Mượn Sách</a></div>
@@ -78,14 +78,16 @@ if(!isset($_SESSION['user_name']) ){
 
                 <a href=""  id="logout">Đăng Xuất<i class="bi bi-door-open"></i></a>
             </div>
-            <div class="col-sm-10 text-dark"></div>
+            <div class="col-sm-10 text-dark">
+                <p>
+                    Hệ thống quản lý thư viện giúp bạn theo dõi thông tin sách, độc giả, và quản lý quá trình mượn/trả sách.
+                </p>
+            </div>
         </div>
     </section>
 
     <section class="main-content">
-        <p>
-            Hệ thống quản lý thư viện giúp bạn theo dõi thông tin sách, độc giả, và quản lý quá trình mượn/trả sách.
-        </p>
+        
     </section>
     <script src="../js/script.js"></script>
 </body>

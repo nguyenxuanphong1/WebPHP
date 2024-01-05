@@ -1,4 +1,6 @@
-
+.bg-darkBlue{
+  background-color: #0d0774;
+}
 *body{
     font-size: 20px;
     /* snow */

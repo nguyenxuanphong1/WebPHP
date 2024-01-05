@@ -30,7 +30,7 @@
         <div class="snowflake">❆</div>
     </div>
 
-    <div class="position-sticky top-0">
+    <div class="">
         <header class="header-banner text-center h-20vh ">
             <img width="20%" src="../img/banner_left.png">
         </header>
@@ -40,6 +40,7 @@
             <!-- <li><a href="admin_readers.php">Quản Lý Độc Giả</a></li> -->
             <li><a href="admin_borrowings.php">Quản Lý Mượn/Trả Sách</a></li>
             <li><a href="admin_users.php">Quản Lý Độc Giả</a></li>
+            <li><a href="admin_report.php">Báo Cáo</a></li>
             <li><a href=""  id="logout">Đăng Xuất</a></li>
         </ul>
     </nav>
