@@ -39,19 +39,13 @@ $(document).ready(function () {
     });
   });
 
-  function searchBorrower() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const rows = document.querySelectorAll('#table tbody tr');
+  document.addEventListener('DOMContentLoaded', function () {
+    const modeToggle = document.getElementById('modeToggle');
 
-    rows.forEach(row => {
-        const name = row.querySelector('td:first-child').textContent.toLowerCase();
-        if (name.includes(input)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
+    modeToggle.addEventListener('change', function () {
+        document.body.classList.toggle('dark-mode');
     });
-}
+});
   
 
 

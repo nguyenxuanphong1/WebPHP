@@ -94,7 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
     <title>Quản Trị Viên - Quản Lý Sách</title>
 </head>
 <body>
-    
     <div class="snowflakes" aria-hidden="true">
         <div class="snowflake">❅</div>
         <div class="snowflake">❆</div>
@@ -138,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
     </div>
     <section class="container-fluid" >
         <div class="row pt-2 ">
-            <h2 class="text-center mt-2 ">Quản Lý Sách</h2>
+            <h2 class="text-center mt-2 ">Quản Lý Sách <i class="bi bi-book"></i></h2>
              <!-- Form tìm kiếm -->
         <form method="POST" action="">
             <div class="input-group mb-3" style="width: 50%; margin: auto;">
@@ -175,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                             <td>
                                 <form method='post' action=''>
                                     <input type='hidden' name='bookId' value='{$row['MaSach']}'>
-                                    <button type='submit' name='deleteBook'>Xóa</button>
+                                    <button type='submit' class='btn btn-primary'  name='deleteBook''>Xóa</button>
                                 </form>
                             </td>
                         </tr>";

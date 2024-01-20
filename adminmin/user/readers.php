@@ -81,7 +81,7 @@ $result = $conn->query($sql);
     </section>
 
     <section class="container-fluid">
-        <div class="row" style="height: 800px">
+        <div class="row" style="height: 600px">
             <div class="col-sm-2 text-black img-user">
                 <div class="img-userpage"><img src="../img/userpage.png " alt=""></div>
                 <h5><span>user</span></h5>
@@ -91,7 +91,7 @@ $result = $conn->query($sql);
             </div>
             <div class="col-sm-10 text-dark">
                 <div class="row">
-                    <h3 class="text-center ">Thông Tin Độc Giả</h3>
+                    <h3 class="text-center ">Thông Tin Độc Giả </h3>
                 </div>
                 
             <div class="row pt-2"  style="height: 300px">
@@ -114,7 +114,8 @@ $result = $conn->query($sql);
                         </script>";
     
                     if ($result->num_rows > 0) {
-                    echo "<table id='table' class='table border-collapse border-secondary table-striped  table-secondary'>
+                    echo "<div style='height: 500px; overflow: auto; '>
+                    <table id='table' class='table border-collapse border-secondary table-striped  table-secondary'>
                     <thead class='position-sticky top-0 z-1 table-dark'>
                         <tr>
                             <th class='text-nowrap' scope='col'>Mã Độc Giả</th>

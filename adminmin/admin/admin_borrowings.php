@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
 </div>
     <section class="container-fluid">
         <div class="row pt-2 ">
-            <h2 class="text-center mt-2">Quản Lý Mượn/Trả Sách</h2>
+            <h2 class="text-center mt-2">Quản Lý Mượn/Trả Sách <i class="bi bi-book"></i></h2>
         </div>
         <!-- Form tìm kiếm -->
         <form method="POST" action="">
@@ -186,7 +186,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                             <td>
                                 <form method='post' action=''>
                                     <input type='hidden' name='bookId' value='{$row['MaMuonTra']}'>
-                                    <button type='submit' name='deleteBook'>Xóa</button>
+                                    <button type='submit' class='btn btn-primary' name='deleteBook'>Xóa</button>
+                                    
                                 </form>
                             </td>
                         </tr>";

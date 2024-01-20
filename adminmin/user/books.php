@@ -13,11 +13,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
 }
-
-
-
-// ... (các phần code khác của bạn)
-
+//thực hiện mươn
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["muon"])) {
     $maDocGia = $_SESSION['id'];
     $ngayMuon = date("Y-m-d H:i:s");
@@ -40,15 +36,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["muon"])) {
     }
 }
 
-// ... (phần code HTML và hiển thị danh sách sách)
-
-
-
-
-
 // Truy vấn cơ sở dữ liệu để lấy thông tin sách
 $sql = "SELECT * FROM Sach";
-$result = $conn->query($sql);
+$result_borrowers = $conn->query($sql);
+
+
+$searchTerm = ''; // Khởi tạo biến lưu trữ giá trị tìm kiếm
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
+    // Lấy dữ liệu từ form tìm kiếm
+    $searchTerm = $_POST['search'];
+
+    // Thực hiện truy vấn dựa trên tên người mượn
+    $sql_search = "SELECT * FROM sach WHERE TieuDe LIKE '%$searchTerm%'";
+
+    $result_borrowers = $conn->query($sql_search);
+}
+
 
 ?>
 
@@ -104,9 +108,9 @@ $result = $conn->query($sql);
     </div>
     <section class="container-fluid ">
         <div class="row bg-darkBlue toolbar ">
-            <div class="col-sm-3 "><a href="books.php" class="text-nav ">Sách</a></div>
-            <div class="col-sm-3 "><a href="readers.php" class="text-nav ">Độc Giả</a></div>
-            <div class="col-sm-3 "><a href="historybook.php" class="text-nav ">Lịch Sử Mượn Sách</a></div>
+            <div class="col-sm-3 "><a href="books.php" class="text-nav ">Sách </a></div>
+            <div class="col-sm-3 "><a href="readers.php" class="text-nav ">Độc Giả </i></a></div>
+            <div class="col-sm-3 "><a href="historybook.php" class="text-nav ">Lịch Sử Mượn Sách </a></div>
             <div class="col-sm-3 "><a href="introducepage.php" class="text-nav " id="gt">Giới thiệu</a></div>
         </div>
     </section>
@@ -122,14 +126,29 @@ $result = $conn->query($sql);
             </div>
             <div class="col-sm-10  text-dark">
                 <div class="row">
-                    <h3 class="text-center ">Danh sách</h3>
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <h3 class="text-center ">Sách </i></h3>
+                    </div>
+                    <div class="col-lg-4">
+                    <form method="POST" action="">
+                        <div class="input-group mb-3" style="width: 90%; margin: auto;">
+                            <input type="text" class="form-control" placeholder="Nhập tên sách cần tìm" name="search">
+                            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search-heart"></i></button>
+                        </div>
+                    </div>
+                </form>
                 </div>
+
+                
+
             
                 <div class="row pt-2" style="height: 300px">
                         <div class="col-sm-12 table-responsive textcontent">
                             <?php
-                            if ($result->num_rows > 0) {
-                                echo "<table id='table' class='table border-collapse border-secondary table-striped table-secondary'>
+                            if ($result_borrowers->num_rows > 0) {
+                                echo "<div style='height: 500px; overflow: auto; '>
+                                <table id='table' class='table border-collapse border-secondary table-striped table-secondary'>
                                 <thead class='position-sticky top-0 z-1 table-dark'>
                                     <tr>
                                         <th class='text-nowrap' scope='col'>Tiêu Đề</th>
@@ -142,7 +161,7 @@ $result = $conn->query($sql);
                                 </thead>
                                 <tbody class='overflow-auto'>";
 
-                                while ($row = $result->fetch_assoc()) {
+                                while ($row = $result_borrowers->fetch_assoc()) {
                                     echo "<tr class='text-dark'>
                                         <td>{$row['TieuDe']}</td>
                                         <td>{$row['TacGia']}</td>

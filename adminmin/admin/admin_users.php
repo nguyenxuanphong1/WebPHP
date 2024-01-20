@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
     </div>
     <section class="container-fluid ">
         <div class="row pt-2 ">
-            <h2 class="text-center mt-2">Quản Lý Người Dùng</h2>
+            <h2 class="text-center mt-2">Quản Lý Người Dùng <i class="bi bi-people"></i></h2>
         </div>
         <form method="POST" action="">
             <div class="input-group mb-3" style="width: 50%; margin: auto;">
@@ -158,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                         <th scope='col'>Số điện thoại</th>
                         <th scope='col'>Password</th>
                         <th scope='col'>Quyền</th>
-                        <th scope='col'></th>
+                        <th scope='col'>Chức năng</th>
                     </tr>
                 </thead>
 
@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
                         <td>
                             <form method='post' action=''>
                                 <input type='hidden' name='userIdToDelete' value='{$row['id']}'>
-                                <button type='submit' name='deleteUser'>Xóa</button>
+                                <button type='submit' class='btn btn-primary' name='deleteUser' >Xóa</button>
                             </form>
                         </td>
                     </tr>";
@@ -232,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
 
 
             <div class="button text-center m-3 ">
-                    <button type="submit" name="addUser" class="btn btn-primary me-5 p-2" data-toggle="button" aria-pressed="false" autocomplete="off">Thêm Người Dùng</button>
+                    <button type="submit" name="addUser" class="btn btn-primary me-5 p-2" data-toggle="button" aria-pressed="false" autocomplete="off">Thêm Người Dùng </button>
                     <button type="submit" name="update" class="btn btn-primary  p-2" data-toggle="button" aria-pressed="false" autocomplete="off">Sửa Người Dùng</button>
                 </div>
         </form>

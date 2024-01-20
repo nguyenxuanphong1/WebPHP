@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['search'])) {
     </div>
     <section>
         <div class="text-center pt-2">
-            <h2 class="text-center mt-2 ">Thống kê Báo Cáo</h2>
+            <h2 class="text-center mt-2 ">Thống kê Báo Cáo <i class="bi bi-flag"></i></h2>
             <!-- Form tìm kiếm -->
     <form method="POST" action="">
         <div class="input-group mb-3" style="width: 50%; margin: auto;">

@@ -70,7 +70,7 @@ if(!isset($_SESSION['user_name']) ){
     </section>
 
     <section class="container-fluid">
-        <div class="row " style="height: 1100px">
+        <div class="row " style="height: 600px">
             <div class="col-sm-2 text-black img-user">
                 <div class="img-userpage"><img src="../img/userpage.png " alt=""></div>
                 <h5><span>user</span></h5>
